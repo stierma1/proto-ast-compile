@@ -1,0 +1,23 @@
+{
+  "name": "proto-ast-compile",
+  "version": "1.0.0",
+  "description": "Compiles the ProtoDocument AST back into a proto doc.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stierma1/proto-ast-compile.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stierma1/proto-ast-compile/issues"
+  },
+  "homepage": "https://github.com/stierma1/proto-ast-compile#readme",
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "proto-parser": "^0.0.9"
+  }
+}
