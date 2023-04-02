@@ -22,8 +22,7 @@
         "values": {
           "UNKNOWN": 0,
           "STARTED": 1,
-          "RUNNING": 1,
-          "STOPPED": "STOPPED"
+          "RUNNING": 1
         }
       },
       "outer": {

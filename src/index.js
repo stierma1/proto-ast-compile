@@ -23,7 +23,8 @@ function _buildRoot(node){
     if(node.syntaxType !== "ProtoRoot"){
         throw new Error("Expected ProtoRoot: found " + node.syntaxType);
     }
-    if(node.options !== null && node.options.length > 0){
+
+    if(node.options !== null){
         builderTokens.push(_buildOptions(node.options, 0));
     }
 
@@ -184,7 +185,7 @@ function _buildServiceDefinition(node, depth){
 
 function _buildMethod(methodNode, depth){
     let str = repeat("  ", depth);
-    str += `rpc ${methodNode.name}(${methodNode.requestType.value}) returns (${methodNode.responseType.value})`;
+    str += `rpc ${methodNode.name}(${methodNode.requestType.value}) returns (${methodNode.responseType.value}) {}`;
     if(methodNode.comment){
         str += " //" + methodNode.comment;
     }
