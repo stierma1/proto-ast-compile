@@ -4,15 +4,21 @@ Compiles the ProtoDocument AST back into a proto doc.
 ## Usage
 ```
 const {compile} = require("proto-ast-compile");
+const parser = require("proto-parser");
 
-const compiled = compile(protoDocument);
+const protoDocument = parser.parse(protoString);
 
-console.log(compiled);
+//...do some edits on protoDocument
+
+const compiledProtoString = compile(protoDocument);
+
+fs.writeFileSync("my-file.proto", compiledProtoString);
 ```
 
 Currently only supports proto3 syntax
 
+
 ## Known Restrictions
-No public imports - currently missing from proto-parser
-No reserved enums - currently missing from proto-parser
+1. No public imports - currently missing from proto-parser
+2. No reserved enums - currently missing from proto-parser
 
