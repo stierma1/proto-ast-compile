@@ -1,6 +1,6 @@
+let parser = require("proto-parser");
 
-
-function compile(protoDocument){
+function unsafeCompile(protoDocument){
     let builderTokens = [];
     if(protoDocument.syntaxType !== "ProtoDocument"){
         throw new Error("Only Supports ProtoDocument: found " + protoDocument.syntaxType);
@@ -201,6 +201,13 @@ function repeat(chars, amount){
     return builder;
 }
 
+function compile(protoDocument){
+    let compiled = unsafeCompile(protoDocument);
+    parser.parse(compiled);
+    return compiled;
+}
+
 module.exports = {
-    compile
+    compile,
+    unsafeCompile
 }

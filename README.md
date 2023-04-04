@@ -2,8 +2,9 @@
 Compiles the ProtoDocument AST back into a proto doc.
 
 ## Usage
-```
-const {compile} = require("proto-ast-compile");
+```js
+const {compile, unsafeCompile} = require("proto-ast-compile");
+//unsafeCompile does not check for validity
 const parser = require("proto-parser");
 
 const protoDocument = parser.parse(protoString);
@@ -19,6 +20,7 @@ Currently only supports proto3 syntax
 
 
 ## Known Restrictions
-1. No public imports - currently missing from proto-parser
-2. No reserved enums - currently missing from proto-parser
+No public imports - currently missing from proto-parser
+ 
+No reserved enums - currently missing from proto-parser
 
