@@ -20,7 +20,6 @@ Currently only supports proto3 syntax
 
 
 ## Known Restrictions
-No public imports - currently missing from proto-parser
- 
-No reserved enums - currently missing from proto-parser
+1. No public imports - currently missing from proto-parser
+2. No reserved enums - currently missing from proto-parser
 

@@ -1,110 +1,136 @@
 {
+  "package": "my.pacakage.proto",
   "imports": [
     "other.proto"
   ],
   "syntax": "proto3",
   "root": {
-    "options": {
-      "java_package": "com.example.foo"
-    },
     "name": "",
     "fullName": "",
     "syntaxType": "ProtoRoot",
     "nested": {
-      "EnumAllowingAlias": {
-        "options": {
-          "allow_alias": true
-        },
-        "name": "EnumAllowingAlias",
-        "fullName": ".EnumAllowingAlias",
-        "comment": null,
-        "syntaxType": "EnumDefinition",
-        "values": {
-          "UNKNOWN": 0,
-          "STARTED": 1,
-          "RUNNING": 1
-        }
-      },
-      "outer": {
-        "options": {
-          "(my_option).a": true
-        },
-        "name": "outer",
-        "fullName": ".outer",
-        "comment": null,
-        "syntaxType": "MessageDefinition",
+      "my": {
+        "name": "my",
+        "fullName": ".my",
+        "syntaxType": "NamespaceDefinition",
         "nested": {
-          "inner": {
-            "name": "inner",
-            "fullName": ".outer.inner",
-            "comment": null,
-            "syntaxType": "MessageDefinition",
-            "fields": {
-              "ival": {
-                "name": "ival",
-                "fullName": ".outer.inner.ival",
-                "comment": "Level 2",
-                "type": {
-                  "value": "int64",
-                  "syntaxType": "BaseType"
+          "pacakage": {
+            "name": "pacakage",
+            "fullName": ".my.pacakage",
+            "syntaxType": "NamespaceDefinition",
+            "nested": {
+              "proto": {
+                "options": {
+                  "java_package": "com.example.foo"
                 },
-                "id": 1,
-                "required": false,
-                "optional": true,
-                "repeated": false,
-                "map": false
+                "name": "proto",
+                "fullName": ".my.pacakage.proto",
+                "syntaxType": "NamespaceDefinition",
+                "nested": {
+                  "EnumAllowingAlias": {
+                    "options": {
+                      "allow_alias": true
+                    },
+                    "name": "EnumAllowingAlias",
+                    "fullName": ".my.pacakage.proto.EnumAllowingAlias",
+                    "comment": null,
+                    "syntaxType": "EnumDefinition",
+                    "values": {
+                      "UNKNOWN": 0,
+                      "STARTED": 1,
+                      "RUNNING": 1
+                    }
+                  },
+                  "outer": {
+                    "options": {
+                      "(my_option).a": true
+                    },
+                    "name": "outer",
+                    "fullName": ".my.pacakage.proto.outer",
+                    "comment": null,
+                    "syntaxType": "MessageDefinition",
+                    "nested": {
+                      "inner": {
+                        "name": "inner",
+                        "fullName": ".my.pacakage.proto.outer.inner",
+                        "comment": null,
+                        "syntaxType": "MessageDefinition",
+                        "fields": {
+                          "ival": {
+                            "name": "ival",
+                            "fullName": ".my.pacakage.proto.outer.inner.ival",
+                            "comment": "Level 2",
+                            "type": {
+                              "value": "int64",
+                              "syntaxType": "BaseType"
+                            },
+                            "id": 1,
+                            "required": false,
+                            "optional": true,
+                            "repeated": false,
+                            "map": false
+                          }
+                        }
+                      }
+                    },
+                    "fields": {
+                      "inner_message": {
+                        "name": "inner_message",
+                        "fullName": ".my.pacakage.proto.outer.inner_message",
+                        "comment": null,
+                        "type": {
+                          "value": "inner",
+                          "syntaxType": "Identifier",
+                          "resolvedValue": ".my.pacakage.proto.outer.inner"
+                        },
+                        "rule": "repeated",
+                        "id": 2,
+                        "required": false,
+                        "optional": true,
+                        "repeated": true,
+                        "map": false
+                      },
+                      "enum_field": {
+                        "name": "enum_field",
+                        "fullName": ".my.pacakage.proto.outer.enum_field",
+                        "comment": null,
+                        "type": {
+                          "value": "EnumAllowingAlias",
+                          "syntaxType": "Identifier",
+                          "resolvedValue": ".my.pacakage.proto.EnumAllowingAlias"
+                        },
+                        "id": 3,
+                        "required": false,
+                        "optional": true,
+                        "repeated": false,
+                        "map": false
+                      },
+                      "my_map": {
+                        "options": {
+                          "deprecated": true,
+                          "(more_options)": "YES"
+                        },
+                        "name": "my_map",
+                        "fullName": ".my.pacakage.proto.outer.my_map",
+                        "comment": null,
+                        "type": {
+                          "value": "string",
+                          "syntaxType": "BaseType"
+                        },
+                        "id": 4,
+                        "required": false,
+                        "optional": true,
+                        "repeated": false,
+                        "map": true,
+                        "keyType": {
+                          "value": "int32",
+                          "syntaxType": "BaseType"
+                        }
+                      }
+                    }
+                  }
+                }
               }
-            }
-          }
-        },
-        "fields": {
-          "inner_message": {
-            "name": "inner_message",
-            "fullName": ".outer.inner_message",
-            "comment": null,
-            "type": {
-              "value": "inner",
-              "syntaxType": "Identifier",
-              "resolvedValue": ".outer.inner"
-            },
-            "rule": "repeated",
-            "id": 2,
-            "required": false,
-            "optional": true,
-            "repeated": true,
-            "map": false
-          },
-          "enum_field": {
-            "name": "enum_field",
-            "fullName": ".outer.enum_field",
-            "comment": null,
-            "type": {
-              "value": "EnumAllowingAlias",
-              "syntaxType": "Identifier",
-              "resolvedValue": ".EnumAllowingAlias"
-            },
-            "id": 3,
-            "required": false,
-            "optional": true,
-            "repeated": false,
-            "map": false
-          },
-          "my_map": {
-            "name": "my_map",
-            "fullName": ".outer.my_map",
-            "comment": null,
-            "type": {
-              "value": "string",
-              "syntaxType": "BaseType"
-            },
-            "id": 4,
-            "required": false,
-            "optional": true,
-            "repeated": false,
-            "map": true,
-            "keyType": {
-              "value": "int32",
-              "syntaxType": "BaseType"
             }
           }
         }

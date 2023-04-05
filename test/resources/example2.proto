@@ -1,6 +1,8 @@
 syntax = "proto3";
 import public "other.proto";
+package my.pacakage.proto;
 option java_package = "com.example.foo";
+
 enum EnumAllowingAlias {
   option allow_alias = true;
   UNKNOWN = 0;
@@ -14,5 +16,5 @@ message outer {
   }
   repeated inner inner_message = 2;
   EnumAllowingAlias enum_field =3;
-  map<int32, string> my_map = 4;
+  map<int32, string> my_map = 4 [deprecated = true, (more_options) = YES];
 }

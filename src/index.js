@@ -11,7 +11,6 @@ function unsafeCompile(protoDocument){
     builderTokens.push(_buildSyntax(protoDocument.syntax));
     if(protoDocument.imports){
         builderTokens.push(_buildImport(protoDocument.imports));
-        builderTokens.push("");
     }
     builderTokens.push(_buildRoot(protoDocument.root));
 
@@ -24,17 +23,49 @@ function _buildRoot(node){
         throw new Error("Expected ProtoRoot: found " + node.syntaxType);
     }
 
-    if(node.options !== null){
-        builderTokens.push(_buildOptions(node.options, 0));
+    let namespace;
+    let subNode;
+    let options;
+    for(let name in node.nested){
+        let namespaceObj = _extractNamespace(node.nested[name]);
+        namespace = namespaceObj.name;
+        subNode = namespaceObj.node ? namespaceObj.node : node;
+        options = namespaceObj.options;
+    }
+    if(namespace){
+        builderTokens.push(_buildPackage(namespace));
     }
 
-    if(node.nested){
-        for(let name in node.nested){
-            builderTokens.push(_buildNode(node.nested[name], 0));
-        }
+    if(options){
+        builderTokens.push(_buildOptions(options, 0));
+    }
+    if(node.options){
+        builderTokens.push(_buildOptions(node.options, 0));
+    }
+    for(let name in subNode.nested){
+        builderTokens.push(_buildNode(subNode.nested[name], 0));
     }
 
     return [builderTokens.join("\n")];
+}
+
+function _extractNamespace(node){
+    if(node.syntaxType === "NamespaceDefinition"){
+        let name = node.name;
+        for(let subName in node.nested){
+            let subNames = _extractNamespace(node.nested[subName]);
+            if(subNames.name){
+                return {name: name + "." + subNames.name, node:subNames.node, options: subNames.options};
+            }
+            return {name, node, options:node.options};
+        }
+    }
+
+    return {name:null, node:null, options:node.options};
+}
+
+function _buildPackage(namespace){
+    return `package ${namespace};`;
 }
 
 function _buildNode(node, depth){
@@ -107,7 +138,19 @@ function _buildMapField(node, depth){
         str += "repeated ";
     }
 
-    str += `map<${node.keyType.value}, ${node.type.value}> ${node.name} = ${node.id};`;
+    str += `map<${node.keyType.value}, ${node.type.value}> ${node.name} = ${node.id}`;
+
+    if(node.options){
+        str += " ["
+        let opts = [];
+        for(let val in node.options){
+            opts.push(val + " = " + node.options[val]);
+        }
+        str += opts.join(",");
+        str += "]"
+    }
+
+    str += ";"
 
     if(node.comment){
         str += " //" + node.comment;
@@ -127,7 +170,19 @@ function _buildBaseTypeOrIdentifier(node, depth){
         str += "repeated ";
     }
 
-    str += `${node.type.value} ${node.name} = ${node.id};`;
+    str += `${node.type.value} ${node.name} = ${node.id}`;
+
+    if(node.options){
+        str += " ["
+        let opts = [];
+        for(let val in node.options){
+            opts.push(val + " = " + node.options[val]);
+        }
+        str += opts.join(",");
+        str += "]"
+    }
+
+    str += ";"
     
     if(node.comment){
         str += " //" + node.comment;
