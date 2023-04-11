@@ -103,6 +103,16 @@ function _buildMessageDefinition(node, depth){
         builderTokens.push(_buildOptions(node.options, depth + 1));
     }
 
+    if(node.reserved && node.reserved.length > 0){
+        if(_buildNumericReserved(node.reserved, depth + 1) !== ""){
+            builderTokens.push(_buildNumericReserved(node.reserved, depth + 1));
+        }
+        if(_buildStringReserved(node.reserved, depth + 1) !== ""){
+            builderTokens.push(_buildStringReserved(node.reserved, depth + 1));
+        }
+       
+    }
+
     if(node.nested){
         for(let name in node.nested){
             builderTokens.push(_buildNode(node.nested[name], depth + 1));
@@ -114,11 +124,46 @@ function _buildMessageDefinition(node, depth){
             builderTokens.push(_buildField(node.fields[name], depth + 1));
         }
     }
+
     let str = "";
     str += repeat("  ", depth) + `message ${node.name} { ${node.comment ? "//" + node.comment : ""}\n`;
     str += builderTokens.join("\n");
     str +=  "\n" + repeat("  ", depth) + `}\n`
     return [str];
+}
+
+function _buildStringReserved(reserved, depth){
+    let str = repeat("  ", depth);
+    let strings = reserved.filter((a) => {
+        return typeof(a) === "string";
+    }).map((str) => {
+        return "\"" + str + "\"";
+    });
+
+    if(strings.length === 0){
+        return "";
+    }
+    str += `reserved ${strings.join(", ")};`
+
+    return str;
+}
+
+function _buildNumericReserved(reserved, depth){
+    let str = repeat("  ", depth);
+    let numericStrings = reserved.filter((a) => {
+        return typeof(a) !== "string";
+    }).map((a) => {
+        if(a[0] === a[1]){
+            return a[0].toString();
+        } else {
+            return a[0] + " to " + a[1];
+        }
+    });
+    if(numericStrings.length === 0){
+        return "";
+    }
+    str += `reserved ${numericStrings.join(", ")};`
+    return str;
 }
 
 function _buildField(node, depth){
@@ -258,7 +303,19 @@ function repeat(chars, amount){
 
 function compile(protoDocument){
     let compiled = unsafeCompile(protoDocument);
-    parser.parse(compiled);
+    parser.parse(compiled, {
+        // Set whether to keep the origin case. The default value is true.
+        keepCase: true,  
+        // Set whether to enable alternateCommentMode. The default value is true.
+        alternateCommentMode: true,
+        // Set whether to resolve types. The default value is true.
+        resolve: false,
+        // Set whether to weak resolve types(do not throw errors when resolve failed).
+        // The default value is true.
+        weakResolve: true,
+        // Set whether to return pure json Object. The default value is true.
+        toJson: true
+      });
     return compiled;
 }
 

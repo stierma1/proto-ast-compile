@@ -16,6 +16,8 @@ message WhoIsReply {
 
 message IntroduceYourselfRequest {
 	string name = 1;
+	reserved 8, 9 to 11;
+	reserved "foo", "bar";
 }
 
 message IntroduceYourselfReply {

@@ -6,10 +6,8 @@ const {compile} = require("../../index");
 const parser  = require("proto-parser");
 
 const protoDocument = JSON.parse(fs.readFileSync(path.join(__dirname, "../resources", "example1.json"), "utf-8"));
-
 let document = compile(protoDocument);
 let parseDocument = parser.parse(document);
-
 assert.equal(JSON.stringify(parseDocument), JSON.stringify(protoDocument));
 
 const protoFile = parser.parse(fs.readFileSync(path.join(__dirname, "../resources", "example2.proto"), "utf-8"));
